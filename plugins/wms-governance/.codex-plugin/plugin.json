@@ -1,0 +1,22 @@
+{
+  "name": "wms-governance",
+  "version": "0.2.0",
+  "description": "WMS / SAP governance",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "onboardingSkill": "./skills/wms-setup/SKILL.md",
+  "interface": {
+    "displayName": "WMS Governance",
+    "shortDescription": "WMS 与 SAP 开发治理",
+    "longDescription": "WMS / SAP 领域规则、安全开发、代码审查、交付检查及按仓库启用的本地审计。",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "为当前 WMS 仓库初始化治理规则。",
+      "按 WMS 规则审查当前变更。"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "commandWindows": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "commandWindows": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "commandWindows": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "commandWindows": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks/dispatch.cjs'))\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}

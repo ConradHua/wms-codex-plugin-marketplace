@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const fs = require('node:fs');
-const { root, settings, inspect, threats, audit, scan } = require('./core.cjs');
+const { root, settings, inspect, redact, threats, audit, scan } = require('./core.cjs');
 try {
   const input = fs.readFileSync(0, 'utf8');
   if (input.length > 2 * 1024 * 1024) throw new Error('Oversize input');
@@ -13,16 +13,18 @@ try {
   switch (event.hook_event_name) {
     case 'SessionStart':
     case 'SessionEnd':
-      audit(repo, event, { source: event.source || null, reason: event.reason || null });
+      audit(repo, event, { source: event.source ? redact(event.source) : null, reason: event.reason ? redact(event.reason) : null });
       break;
     case 'UserPromptSubmit': {
       if (typeof event.prompt !== 'string') throw new Error('Missing prompt');
       const secrets = [...new Set(inspect(event.prompt).map(f => f.rule))];
       const signals = threats(event.prompt);
-      const blocked = policy.level !== 'open' && ((policy.blockPromptSecrets && secrets.length > 0) || (['strict', 'locked'].includes(policy.level) && signals.length > 0));
-      audit(repo, event, { secret_rules: secrets, threat_rules: signals, blocked, level: policy.level });
+      const blocked = policy.level !== 'open' && ((policy.blockPromptSecrets && secrets.length > 0) || ((policy.blockThreats || ['strict', 'locked'].includes(policy.level)) && signals.length > 0));
+      audit(repo, event, { secret_rules: secrets, threat_rules: signals, blocked, level: policy.level,
+        prompt_preview: redact(event.prompt).slice(0, 2000), prompt_length: event.prompt.length,
+        prompt_truncated: redact(event.prompt).length > 2000 });
       if (blocked) output = { decision: 'block', reason: '治理检查发现敏感内容或受限操作。请使用占位符并明确操作范围后重新提交。' };
-      else if (secrets.length || signals.length) output = { systemMessage: '治理检查发现风险信号；请核对任务范围与凭据使用。' };
+      else if (secrets.length || signals.length) output = { systemMessage: '治理检查发现风险信号；请核对任务范围与凭据使用。此 hook 不提供工具调用门禁或请求确认恢复流程。' };
       break;
     }
     case 'Stop': {

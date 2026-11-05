@@ -1,4 +1,4 @@
-# WMS Governance 0.2.0
+# WMS Governance 0.2.2
 
 本地 Codex desktop 插件，含六个技能和按仓库激活的治理 hooks。运行需要 Node.js 22+ 和 Git，无额外 npm 依赖。安装后选择插件，在业务仓库发送“使用 wms-setup 为当前仓库初始化治理”，再审核信任 hooks。未激活仓库仅可使用技能，不运行治理扫描或审计。
 

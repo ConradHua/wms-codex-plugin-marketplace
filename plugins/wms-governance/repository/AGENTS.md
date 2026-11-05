@@ -93,4 +93,4 @@ public sealed class PostGoodsReceipt : NServiceBus.ICommand
 - 真实源码与已确认接口契约优先于示例；专项领域规则优先于通用安全示例。有实质冲突必须指出，不按加载顺序决定。
 - 用户要求独立代码审查或安全审查时，可分别使用 `wms-code-reviewer`、`wms-security-auditor`；不要把审查角色默认用于所有修改。
 - 提交前只暂存本任务明确范围，扫描暂存区，执行相关测试，再提交。不跳过 Git 检查。推送按用户已有授权执行。
-- hooks 是辅助检查。实际权限由运行环境控制；本地规则不能代替 CI、数据库权限或 SAP 授权。
+- hooks 是辅助检查。`governance/settings.json` 中 `blockThreats` 默认启用，standard 级别会阻止检测到风险的提示词提交；Stop hook 仅扫描并提示。当前 Codex hook 接口不提供转换后提示词或工具调用前事件，因此不能实现工具门禁或逐请求确认恢复。实际权限由运行环境控制；本地规则不能代替 CI、数据库权限或 SAP 授权。审计日志含脱敏提示词预览和元数据，访问及保留应受控。
